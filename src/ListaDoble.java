@@ -1,9 +1,9 @@
 public class ListaDoble {
-    private Nodo primero;
-    private Nodo ultimo;
+    Nodo primero;
+    Nodo ultimo;
+
     public void agregar(String dato){
-        Nodo nuevo = new Nodo();
-        nuevo.setDato(dato);
+        Nodo nuevo = new Nodo(dato);  // Usar constructor con dato
 
         if(primero == null){
             primero = nuevo;
@@ -17,53 +17,74 @@ public class ListaDoble {
         }
     }
 
-    public void eliminar(String dato){
-        Nodo temp = null; //Nodo a eliminar
-        Nodo aux = null; //Nodo antes de eliminar
-        if(primero == null){
-            if(primero.getDato().equals(dato)){
-                //Eliminar el primero
-                temp = primero;
-                primero = temp.getSiguiente();
-                if(primero == null){
-                    ultimo = null;
-                } else {
-                    primero.setAnterior(null);
-                }
-            } else if (ultimo.getDato().equals(dato)) {
-                //Eliminar el ultimo
-                temp = ultimo;
-                ultimo = temp.getAnterior();
-                ultimo.setSiguiente(null);
-            } else {
-                //Eliminar un nodo entre medio
-                aux = primero;
-                temp = primero.getSiguiente();
-                while (temp != null) {
-                    if (temp.getDato() == dato) {
-                        aux.setSiguiente(temp.getSiguiente());
-                        temp.getSiguiente().setAnterior(aux);
-                        break;
-                    }
-                    aux = temp;
-                    temp = temp.getSiguiente();
-                }
-            }
+    public void eliminar(String dato) {
+        if (primero == null) {
+            return; // Lista vacía, no hay nada que eliminar
         }
 
+        Nodo temp = null;
+        Nodo aux = null;
+
+        // Eliminar el primer nodo
+        if (primero.getDato().equals(dato)) {
+            temp = primero;
+            primero = temp.getSiguiente();
+            if (primero == null) {
+                ultimo = null;
+            } else {
+                primero.setAnterior(null);
+            }
+            return;
+        }
+        // Eliminar el último nodo
+        else if (ultimo.getDato().equals(dato)) {
+            temp = ultimo;
+            ultimo = temp.getAnterior();
+            if (ultimo != null) {
+                ultimo.setSiguiente(null);
+            } else {
+                primero = null; // Si era el único nodo
+            }
+            return;
+        }
+        // Eliminar nodo intermedio
+        else {
+            aux = primero;
+            temp = primero.getSiguiente();
+            while (temp != null && temp != ultimo) {
+                if (temp.getDato().equals(dato)) {
+                    aux.setSiguiente(temp.getSiguiente());
+                    if (temp.getSiguiente() != null) {
+                        temp.getSiguiente().setAnterior(aux);
+                    }
+                    return;
+                }
+                aux = temp;
+                temp = temp.getSiguiente();
+            }
+        }
     }
-    public void imprimir(){
+
+    public void imprimir() {
+        if (primero == null) {
+            System.out.println("La lista está vacía");
+            return;
+        }
+
+        //System.out.println("Recorrido hacia adelante:");//Recorrido hacia adelante:
         Nodo temp = primero;
         while(temp != null){
-            System.out.println(temp.getDato());
+            System.out.print(temp.getDato() + " -> ");
             temp = temp.getSiguiente();
         }
         System.out.println("null");
 
+        /*System.out.println("Recorrido hacia atrás:");
         temp = ultimo;
         while(temp != null){
-            System.out.println(temp.getDato()+"|");
+            System.out.print(temp.getDato() + " -> ");
+            temp = temp.getAnterior();
         }
+        System.out.println("null");*/
     }
-
 }
