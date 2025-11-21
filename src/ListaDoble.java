@@ -19,49 +19,47 @@ public class ListaDoble {
 
     public void eliminar(String dato) {
         if (primero == null) {
-            return; // Lista vacía, no hay nada que eliminar
+            return; // Lista vacía
         }
-
-        Nodo temp = null;
-        Nodo aux = null;
 
         // Eliminar el primer nodo
         if (primero.getDato().equals(dato)) {
-            temp = primero;
-            primero = temp.getSiguiente();
-            if (primero == null) {
-                ultimo = null;
-            } else {
+            Nodo temp = primero;
+            primero = primero.getSiguiente();
+            if (primero != null) {
                 primero.setAnterior(null);
+            } else {
+                ultimo = null; // La lista quedó vacía
             }
             return;
         }
+
         // Eliminar el último nodo
-        else if (ultimo.getDato().equals(dato)) {
-            temp = ultimo;
-            ultimo = temp.getAnterior();
+        if (ultimo.getDato().equals(dato)) {
+            Nodo temp = ultimo;
+            ultimo = ultimo.getAnterior();
             if (ultimo != null) {
                 ultimo.setSiguiente(null);
             } else {
-                primero = null; // Si era el único nodo
+                primero = null; // La lista quedó vacía
             }
             return;
         }
+
         // Eliminar nodo intermedio
-        else {
-            aux = primero;
-            temp = primero.getSiguiente();
-            while (temp != null && temp != ultimo) {
-                if (temp.getDato().equals(dato)) {
-                    aux.setSiguiente(temp.getSiguiente());
-                    if (temp.getSiguiente() != null) {
-                        temp.getSiguiente().setAnterior(aux);
-                    }
-                    return;
+        Nodo actual = primero.getSiguiente();
+        while (actual != null && actual != ultimo) {
+            if (actual.getDato().equals(dato)) {
+                Nodo anterior = actual.getAnterior();
+                Nodo siguiente = actual.getSiguiente();
+
+                anterior.setSiguiente(siguiente);
+                if (siguiente != null) {
+                    siguiente.setAnterior(anterior);
                 }
-                aux = temp;
-                temp = temp.getSiguiente();
+                return;
             }
+            actual = actual.getSiguiente();
         }
     }
 

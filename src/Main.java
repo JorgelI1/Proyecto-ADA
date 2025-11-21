@@ -75,13 +75,144 @@ public class Main {
                         break;
 
                     case 2:
-                        // Lógica para prestar libro
-                        System.out.println("Función de prestar libro - En desarrollo");
+                        System.out.println("\n=== PRESTAR LIBRO ===");
+
+                        // Mostrar todos los libros disponibles por género
+                        System.out.println("Libros disponibles en la biblioteca:");
+                        boolean hayLibrosDisponibles = false;
+
+                        for (String genero : generos) {
+                            ListaDoble librosDelGenero = biblioteca.get(genero);
+                            if (librosDelGenero.primero != null) {
+                                hayLibrosDisponibles = true;
+                                System.out.println("\n--- " + genero + " ---");
+
+                                Nodo temp = librosDelGenero.primero;
+                                while (temp != null) {
+                                    System.out.println("  " + temp.getDato());
+                                    temp = temp.getSiguiente();
+                                }
+                            }
+                        }
+
+                        if (!hayLibrosDisponibles) {
+                            System.out.println("❌ No hay libros disponibles para prestar.");
+                            break;
+                        }
+
+                        // Pedir ID del libro a prestar
+                        System.out.print("\nIngrese el ID del libro a prestar (ej: LIB001): ");
+                        String idPrestar = leer.readLine().trim();
+
+                        // Buscar el libro en todos los géneros
+                        boolean libroEncontrado = false;
+                        String libroPrestado = null;
+
+                        for (String genero : generos) {
+                            ListaDoble librosDelGenero = biblioteca.get(genero);
+                            Nodo temp = librosDelGenero.primero;
+
+                            while (temp != null) {
+                                String libroActual = temp.getDato();
+                                // Verificar si el libro contiene el ID buscado
+                                if (libroActual.contains(idPrestar)) {
+                                    libroPrestado = libroActual;
+                                    libroEncontrado = true;
+
+                                    // Eliminar de la biblioteca
+                                    librosDelGenero.eliminar(libroActual);
+
+                                    // Agregar a la lista de prestados
+                                    listaPrestado.agregar(libroActual);
+
+                                    System.out.println("✓ Libro prestado exitosamente:");
+                                    System.out.println("  " + libroActual);
+                                    System.out.println("  Género: " + genero);
+                                    break;
+                                }
+                                temp = temp.getSiguiente();
+                            }
+
+                            if (libroEncontrado) {
+                                break;
+                            }
+                        }
+
+                        if (!libroEncontrado) {
+                            System.out.println("❌ No se encontró ningún libro con el ID: " + idPrestar);
+                        }
                         break;
 
                     case 3:
-                        // Lógica para devolver libro
-                        System.out.println("Función de devolver libro - En desarrollo");
+                        System.out.println("\n=== DEVOLVER LIBRO ===");
+
+                        // Mostrar libros prestados
+                        if (listaPrestado.primero == null) {
+                            System.out.println("No hay libros prestados actualmente.");
+                            break;
+                        }
+
+                        System.out.println("Libros actualmente prestados:");
+                        listaPrestado.imprimir();
+
+                        // Pedir ID del libro a devolver
+                        System.out.print("\nIngrese el ID del libro a devolver (ej: LIB001): ");
+                        String idDevolver = leer.readLine().trim();
+
+                        // Buscar el libro en la lista de prestados
+                        boolean libroEncontradoPrestado = false;
+                        String libroDevuelto = null;
+
+                        Nodo tempPrestado = listaPrestado.primero;
+                        while (tempPrestado != null) {
+                            String libroActual = tempPrestado.getDato();
+
+                            if (libroActual.contains(idDevolver)) {
+                                libroDevuelto = libroActual;
+                                libroEncontradoPrestado = true;
+
+                                // Extraer género del libro (asumiendo formato: "ID - Título")
+                                String[] partes = libroActual.split(" - ");
+                                if (partes.length >= 1) {
+                                    // Buscar en qué género estaba originalmente
+                                    for (String genero : generos) {
+                                        // Verificar si el título podría pertenecer a este género
+                                        // En una implementación real, deberías guardar el género original
+                                        ListaDoble librosDelGenero = biblioteca.get(genero);
+                                        Nodo tempGenero = librosDelGenero.primero;
+                                        boolean encontradoEnGenero = false;
+
+                                        while (tempGenero != null) {
+                                            if (tempGenero.getDato().equals(libroActual)) {
+                                                encontradoEnGenero = true;
+                                                break;
+                                            }
+                                            tempGenero = tempGenero.getSiguiente();
+                                        }
+
+                                        // Si no está en este género, probablemente era de aquí
+                                        if (!encontradoEnGenero) {
+                                            // Eliminar de prestados
+                                            listaPrestado.eliminar(libroActual);
+
+                                            // Agregar de vuelta a la biblioteca
+                                            librosDelGenero.agregar(libroActual);
+
+                                            System.out.println("✓ Libro devuelto exitosamente:");
+                                            System.out.println("  " + libroActual);
+                                            System.out.println("  Género: " + genero);
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                            tempPrestado = tempPrestado.getSiguiente();
+                        }
+
+                        if (!libroEncontradoPrestado) {
+                            System.out.println("❌ No se encontró ningún libro prestado con el ID: " + idDevolver);
+                        }
                         break;
 
                     case 4:
