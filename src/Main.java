@@ -6,6 +6,11 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         BufferedReader leer = new BufferedReader(new InputStreamReader(System.in));
+        String[] generos = {"Accion", "Fantasia", "Horror", "Romance", "Ciencia Ficcion", "Aventuras", "Comedia", "Drama" };
+        ListaDoble listaBiblioteca = new ListaDoble();
+        ListaDoble listaPrestado = new ListaDoble();
+
+        String dato;
         int opcion = 0;
         do {
             try {
@@ -15,13 +20,16 @@ public class Main {
                 System.out.println("2. Prestar libro");
                 System.out.println("3. Devolver libro");
                 System.out.println("4. Reordenarmiento");
-                System.out.println("0. Continuar");
+                System.out.println("5. Mostrar libros");
+                System.out.println("0. Salir del programa");
                 System.out.print("Seleccione una opción (0-3): ");
                 // Leer la opción del usuario
                 opcion = Integer.parseInt(leer.readLine());
                 switch (opcion) {
                     case 1:
-
+                        System.out.println("Ingrese el titulo del libro: ");
+                        dato = leer.readLine();
+                        listaBiblioteca.agregar(dato);
                         break;
                     case 2:
 
@@ -31,6 +39,9 @@ public class Main {
                         break;
                     case 4:
                         /*MERGE O QUICKSORT AQUI*/
+                        break;
+                    case 5:
+                        listaPrestado.imprimir();
                         break;
                     case 0:
                         break;

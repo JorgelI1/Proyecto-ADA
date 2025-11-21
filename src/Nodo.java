@@ -1,5 +1,5 @@
 public class Nodo {
-    int dato;
+    String dato;
     Nodo siguiente;
     Nodo anterior;
 
@@ -21,10 +21,10 @@ public class Nodo {
     public void setAnterior(Nodo anterior){
         this.anterior = anterior;
     }
-    public int getDato(){
+    public String getDato(){
         return dato;
     }
-    public void setDato(int dato){
+    public void setDato(String dato){
         this.dato = dato;
     }
 }
