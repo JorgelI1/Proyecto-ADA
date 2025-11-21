@@ -1,7 +1,7 @@
 public class ListaDoble {
     private Nodo primero;
     private Nodo ultimo;
-    public void agregar(int dato){
+    public void agregar(String dato){
         Nodo nuevo = new Nodo();
         nuevo.setDato(dato);
 
@@ -17,11 +17,11 @@ public class ListaDoble {
         }
     }
 
-    public void eliminar(int dato){
+    public void eliminar(String dato){
         Nodo temp = null; //Nodo a eliminar
         Nodo aux = null; //Nodo antes de eliminar
         if(primero == null){
-            if(primero.getDato() == dato){
+            if(primero.getDato().equals(dato)){
                 //Eliminar el primero
                 temp = primero;
                 primero = temp.getSiguiente();
@@ -30,7 +30,7 @@ public class ListaDoble {
                 } else {
                     primero.setAnterior(null);
                 }
-            } else if (ultimo.getDato() == dato) {
+            } else if (ultimo.getDato().equals(dato)) {
                 //Eliminar el ultimo
                 temp = ultimo;
                 ultimo = temp.getAnterior();
@@ -51,6 +51,19 @@ public class ListaDoble {
             }
         }
 
+    }
+    public void imprimir(){
+        Nodo temp = primero;
+        while(temp != null){
+            System.out.println(temp.getDato());
+            temp = temp.getSiguiente();
+        }
+        System.out.println("null");
+
+        temp = ultimo;
+        while(temp != null){
+            System.out.println(temp.getDato()+"|");
+        }
     }
 
 }
