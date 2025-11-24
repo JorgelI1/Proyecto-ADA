@@ -1,5 +1,6 @@
 public class Nodo {
     String dato;
+    String genero;  // Nuevo campo para guardar el género
     Nodo siguiente;
     Nodo anterior;
 
@@ -26,6 +27,12 @@ public class Nodo {
     }
     public void setDato(String dato){
         this.dato = dato;
+    }
+    public String getGenero(){
+        return genero;
+    }
+    public void setGenero(String genero){
+        this.genero = genero;
     }
 }
 

@@ -2,8 +2,11 @@ public class ListaDoble {
     Nodo primero;
     Nodo ultimo;
 
-    public void agregar(String dato){
+
+    public void agregar(String dato, String genero){
         Nodo nuevo = new Nodo(dato);  // Usar constructor con dato
+        nuevo.setDato(dato);
+        nuevo.setGenero(genero);
 
         if(primero == null){
             primero = nuevo;
@@ -65,24 +68,14 @@ public class ListaDoble {
 
     public void imprimir() {
         if (primero == null) {
-            System.out.println("La lista está vacía");
+            System.out.println("  (vacio)");
             return;
         }
 
-        //System.out.println("Recorrido hacia adelante:");//Recorrido hacia adelante:
         Nodo temp = primero;
-        while(temp != null){
-            System.out.print(temp.getDato() + " -> ");
+        while (temp != null) {
+            System.out.println("  " + temp.getDato());
             temp = temp.getSiguiente();
         }
-        System.out.println("null");
-
-        /*System.out.println("Recorrido hacia atrás:");
-        temp = ultimo;
-        while(temp != null){
-            System.out.print(temp.getDato() + " -> ");
-            temp = temp.getAnterior();
-        }
-        System.out.println("null");*/
     }
 }
