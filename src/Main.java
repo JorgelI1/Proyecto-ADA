@@ -70,7 +70,7 @@ public class Main {
                             System.out.println("  Título: " + titulo);
                             System.out.println("  Género: " + generoElegido);
                         } else {
-                            System.out.println("❌ Error: Género no válido");
+                            System.out.println("Error: Género no válido");
                         }
                         break;
 
@@ -96,7 +96,7 @@ public class Main {
                         }
 
                         if (!hayLibrosDisponibles) {
-                            System.out.println("❌ No hay libros disponibles para prestar.");
+                            System.out.println("No hay libros disponibles para prestar.");
                             break;
                         }
 
@@ -139,7 +139,7 @@ public class Main {
                         }
 
                         if (!libroEncontrado) {
-                            System.out.println("❌ No se encontró ningún libro con el ID: " + idPrestar);
+                            System.out.println("No se encontró ningún libro con el ID: " + idPrestar);
                         }
                         break;
 
@@ -211,7 +211,7 @@ public class Main {
                         }
 
                         if (!libroEncontradoPrestado) {
-                            System.out.println("❌ No se encontró ningún libro prestado con el ID: " + idDevolver);
+                            System.out.println("No se encontró ningún libro prestado con el ID: " + idDevolver);
                         }
                         break;
 
@@ -233,7 +233,7 @@ public class Main {
                             System.out.println("\n=== LIBROS DE " + genero.toUpperCase() + " ===");
                             biblioteca.get(genero).imprimir();
                         } else {
-                            System.out.println("❌ Error: Género no válido");
+                            System.out.println("Error: Género no válido");
                         }
                         break;
 
@@ -261,7 +261,7 @@ public class Main {
                         break;
 
                     default:
-                        System.out.println("❌ Opción no válida.");
+                        System.out.println("Opción no válida.");
                         break;
                 }
             } catch (IOException e) {
