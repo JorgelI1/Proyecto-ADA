@@ -13,33 +13,52 @@ public class DevolverLibro {
                 return;
             }
 
+            // Mostrar libros prestados
             System.out.println("Libros actualmente prestados:");
-            listaPrestado.imprimir();
+            if (listaPrestado.primero == null) {
+                System.out.println("  (vacio)");
+            } else {
+                Nodo temp = listaPrestado.primero;
+                while (temp != null) {
+                    String titulo = extraerTitulo(temp.getDato());
+                    System.out.println("  " + titulo);
+                    temp = temp.getSiguiente();
+                }
+            }
 
-            System.out.print("\nIngrese el ID del libro a devolver (ej: 00001): ");
-            String idDevolver = Main.getLeer().readLine().trim();
+            // Pedir título en lugar de ID
+            System.out.print("\nIngrese el titulo del libro a devolver: ");
+            String tituloDevolver = Main.getLeer().readLine().trim();
 
-            // Buscar el nodo en la lista de prestados
-            Nodo nodoEncontrado = listaPrestado.buscarPorId(idDevolver);
+            // Buscar el nodo en la lista de prestados por título
+            Nodo nodoEncontrado = listaPrestado.buscarPorTitulo(tituloDevolver);
 
             if (nodoEncontrado != null) {
                 String libroActual = nodoEncontrado.getDato();
                 String generoOriginal = nodoEncontrado.getGenero();
+                String titulo = extraerTitulo(libroActual);
 
                 // Eliminar por nodo de la lista de prestados (O(1))
                 listaPrestado.eliminar(nodoEncontrado);
 
-                // Agregar de vuelta a la biblioteca en su género original
+                // Agregar de vuelta a la biblioteca en su genero original
                 biblioteca.get(generoOriginal).agregar(libroActual, generoOriginal);
 
                 System.out.println("Libro devuelto exitosamente:");
-                System.out.println("  " + libroActual);
+                System.out.println("  Titulo: " + titulo);
                 System.out.println("  Genero: " + generoOriginal);
             } else {
-                System.out.println("No se encontro ningun libro prestado con el ID: " + idDevolver);
+                System.out.println("No se encontro ningun libro prestado con el titulo: " + tituloDevolver);
             }
         } catch (Exception e) {
             System.out.println("Error al devolver libro: " + e.getMessage());
         }
+    }
+
+    // Extrae el titulo
+    private static String extraerTitulo(String libroCompleto) {
+        if (libroCompleto == null) return "";
+        String[] partes = libroCompleto.split(" - ", 2);
+        return partes.length == 2 ? partes[1].trim() : libroCompleto;
     }
 }

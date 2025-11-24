@@ -11,16 +11,15 @@ public class AgregarLibro {
             String[] generos = Main.getGeneros();
             HashMap<String, ListaDoble> biblioteca = Main.getBiblioteca();
 
-            // Generar ID único para el libro (5 números)
+            // Generar ID (5 números)
             String idLibro = String.format("%05d", contadorId++);
-
             System.out.println("ID generado para el libro: " + idLibro);
 
-            // Pedir título del libro
+            // Pedir título
             System.out.print("Ingrese el titulo del libro: ");
             String titulo = leer.readLine();
 
-            // Mostrar lista de géneros con índices
+            // Mostrar lista de géneros
             System.out.println("\nSeleccione el genero del libro:");
             for (int i = 0; i < generos.length; i++) {
                 System.out.println((i + 1) + ". " + generos[i]);

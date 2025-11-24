@@ -18,12 +18,7 @@ public class ListaDoble {
         }
     }
 
-    // Método sobrecargado para compatibilidad
-    public void agregar(String dato) {
-        agregar(dato, "Desconocido");
-    }
-
-    // Método para eliminar por nodo (O(1))
+    // Elimina el nodo 0(1)
     public void eliminar(Nodo nodo) {
         if (nodo == null) return;
 
@@ -51,19 +46,12 @@ public class ListaDoble {
         }
     }
 
-    // Método para eliminar por dato (O(N) - para compatibilidad)
-    public void eliminar(String dato) {
-        Nodo nodo = buscarPorId(extraerId(dato));
-        if (nodo != null) {
-            eliminar(nodo);
-        }
-    }
-
-    // Método para buscar por ID y devolver el nodo (O(N))
-    public Nodo buscarPorId(String id) {
+    // Busca por titulo y devuelve nodo 0(N) creo
+    public Nodo buscarPorTitulo(String titulo) {
         Nodo temp = primero;
         while (temp != null) {
-            if (temp.getDato().startsWith(id + " - ")) {
+            String tituloActual = extraerTitulo(temp.getDato());
+            if (tituloActual.equalsIgnoreCase(titulo)) {
                 return temp;
             }
             temp = temp.getSiguiente();
@@ -71,11 +59,26 @@ public class ListaDoble {
         return null;
     }
 
-    // Método auxiliar para extraer ID del formato "00001 - Título"
-    private String extraerId(String libroCompleto) {
+    // Extraer titulo
+    private String extraerTitulo(String libroCompleto) {
         if (libroCompleto == null) return "";
         String[] partes = libroCompleto.split(" - ", 2);
-        return partes.length > 0 ? partes[0].trim() : "";
+        return partes.length == 2 ? partes[1].trim() : libroCompleto;
+    }
+
+    // Muestra libros disponibles (nuevo)
+    public void imprimirSoloTitulos() {
+        if (primero == null) {
+            System.out.println("  (vacio)");
+            return;
+        }
+
+        Nodo temp = primero;
+        while (temp != null) {
+            String titulo = extraerTitulo(temp.getDato());
+            System.out.println("  " + titulo);
+            temp = temp.getSiguiente();
+        }
     }
 
     public void imprimir() {

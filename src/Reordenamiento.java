@@ -48,7 +48,7 @@ public class Reordenamiento {
     }
 
 
-    // Método para convertir ListaDoble a ArrayList
+    // Convierte ListaDoble a ArrayList
     private static ArrayList<String> convertirListaAArray(ListaDoble lista) {
         ArrayList<String> array = new ArrayList<>();
         Nodo actual = lista.primero;
@@ -61,7 +61,7 @@ public class Reordenamiento {
         return array;
     }
 
-    // Método principal de QuickSort
+    // Implementacion de QuickSort
     private static void quickSort(ArrayList<String> array, int low, int high) {
         if (low < high) {
             // Encontrar el índice de partición
@@ -73,7 +73,7 @@ public class Reordenamiento {
         }
     }
 
-    // Método de partición para QuickSort
+    // Partir el array list para QuickSort
     private static int particion(ArrayList<String> array, int low, int high) {
         // Tomar el último elemento como pivote
         String pivote = extraerTitulo(array.get(high));
@@ -100,7 +100,7 @@ public class Reordenamiento {
         return i + 1;
     }
 
-    // Método para extraer solo el título del formato "ID - Título"
+    // Devolver solo el titulo porque en el String esta pegado el id
     private static String extraerTitulo(String libroCompleto) {
         if (libroCompleto == null) return "";
 
