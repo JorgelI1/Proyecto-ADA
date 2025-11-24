@@ -11,6 +11,7 @@ public class PrestarLibro {
 
             System.out.println("\n=== PRESTAR LIBRO ===");
 
+            // Mostrar solo títulos disponibles
             System.out.println("Libros disponibles en la biblioteca:");
             boolean hayLibrosDisponibles = false;
 
@@ -19,7 +20,7 @@ public class PrestarLibro {
                 if (librosDelGenero.primero != null) {
                     hayLibrosDisponibles = true;
                     System.out.println("\n--- " + genero + " ---");
-                    librosDelGenero.imprimir();
+                    librosDelGenero.imprimirSoloTitulos();
                 }
             }
 
@@ -28,15 +29,16 @@ public class PrestarLibro {
                 return;
             }
 
-            System.out.print("\nIngrese el ID del libro a prestar (ej: 00001): ");
-            String idPrestar = leer.readLine().trim();
+            // Pedir título en lugar de ID
+            System.out.print("\nIngrese el titulo del libro a prestar: ");
+            String tituloPrestar = leer.readLine().trim();
 
             boolean libroEncontrado = false;
 
             for (String genero : generos) {
                 ListaDoble librosDelGenero = biblioteca.get(genero);
-                // Buscar el nodo por ID
-                Nodo nodoEncontrado = librosDelGenero.buscarPorId(idPrestar);
+                // Buscar el nodo por título
+                Nodo nodoEncontrado = librosDelGenero.buscarPorTitulo(tituloPrestar);
 
                 if (nodoEncontrado != null) {
                     libroEncontrado = true;
@@ -50,14 +52,14 @@ public class PrestarLibro {
                     listaPrestado.agregar(libroActual, generoOriginal);
 
                     System.out.println("Libro prestado exitosamente:");
-                    System.out.println("  " + libroActual);
+                    System.out.println("  Titulo: " + tituloPrestar);
                     System.out.println("  Genero: " + generoOriginal);
                     break;
                 }
             }
 
             if (!libroEncontrado) {
-                System.out.println("No se encontro ningun libro con el ID: " + idPrestar);
+                System.out.println("No se encontro ningun libro con el titulo: " + tituloPrestar);
             }
         } catch (Exception e) {
             System.out.println("Error al prestar libro: " + e.getMessage());
