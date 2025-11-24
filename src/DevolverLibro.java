@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 import java.util.HashMap;
 
 public class DevolverLibro {
@@ -17,36 +16,26 @@ public class DevolverLibro {
             System.out.println("Libros actualmente prestados:");
             listaPrestado.imprimir();
 
-            // Buscar por ID de 5 números
             System.out.print("\nIngrese el ID del libro a devolver (ej: 00001): ");
             String idDevolver = Main.getLeer().readLine().trim();
 
-            boolean libroEncontradoPrestado = false;
+            // Buscar el nodo en la lista de prestados
+            Nodo nodoEncontrado = listaPrestado.buscarPorId(idDevolver);
 
-            Nodo tempPrestado = listaPrestado.primero;
-            while (tempPrestado != null) {
-                String libroActual = tempPrestado.getDato();
+            if (nodoEncontrado != null) {
+                String libroActual = nodoEncontrado.getDato();
+                String generoOriginal = nodoEncontrado.getGenero();
 
-                // Buscar por ID de 5 números al inicio
-                if (libroActual.startsWith(idDevolver + " - ")) {
-                    libroEncontradoPrestado = true;
-                    String generoOriginal = tempPrestado.getGenero();
+                // Eliminar por nodo de la lista de prestados (O(1))
+                listaPrestado.eliminar(nodoEncontrado);
 
-                    // Eliminar de prestados
-                    listaPrestado.eliminar(libroActual);
+                // Agregar de vuelta a la biblioteca en su género original
+                biblioteca.get(generoOriginal).agregar(libroActual, generoOriginal);
 
-                    // Agregar de vuelta a la biblioteca en su género original
-                    biblioteca.get(generoOriginal).agregar(libroActual, generoOriginal);
-
-                    System.out.println("Libro devuelto exitosamente:");
-                    System.out.println("  " + libroActual);
-                    System.out.println("  Genero: " + generoOriginal);
-                    break;
-                }
-                tempPrestado = tempPrestado.getSiguiente();
-            }
-
-            if (!libroEncontradoPrestado) {
+                System.out.println("Libro devuelto exitosamente:");
+                System.out.println("  " + libroActual);
+                System.out.println("  Genero: " + generoOriginal);
+            } else {
                 System.out.println("No se encontro ningun libro prestado con el ID: " + idDevolver);
             }
         } catch (Exception e) {

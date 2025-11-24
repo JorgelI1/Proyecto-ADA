@@ -28,7 +28,6 @@ public class PrestarLibro {
                 return;
             }
 
-            // Ahora busca por ID de 5 números (ej: 00001)
             System.out.print("\nIngrese el ID del libro a prestar (ej: 00001): ");
             String idPrestar = leer.readLine().trim();
 
@@ -36,30 +35,23 @@ public class PrestarLibro {
 
             for (String genero : generos) {
                 ListaDoble librosDelGenero = biblioteca.get(genero);
-                Nodo temp = librosDelGenero.primero;
+                // Buscar el nodo por ID
+                Nodo nodoEncontrado = librosDelGenero.buscarPorId(idPrestar);
 
-                while (temp != null) {
-                    String libroActual = temp.getDato();
-                    // Buscar por ID de 5 números al inicio del string
-                    if (libroActual.startsWith(idPrestar + " - ")) {
-                        libroEncontrado = true;
-                        String generoOriginal = temp.getGenero();
+                if (nodoEncontrado != null) {
+                    libroEncontrado = true;
+                    String libroActual = nodoEncontrado.getDato();
+                    String generoOriginal = nodoEncontrado.getGenero();
 
-                        // Eliminar de la biblioteca
-                        librosDelGenero.eliminar(libroActual);
+                    // Eliminar por nodo (O(1))
+                    librosDelGenero.eliminar(nodoEncontrado);
 
-                        // Agregar a la lista de prestados con el género
-                        listaPrestado.agregar(libroActual, generoOriginal);
+                    // Agregar a la lista de prestados
+                    listaPrestado.agregar(libroActual, generoOriginal);
 
-                        System.out.println("Libro prestado exitosamente:");
-                        System.out.println("  " + libroActual);
-                        System.out.println("  Genero: " + generoOriginal);
-                        break;
-                    }
-                    temp = temp.getSiguiente();
-                }
-
-                if (libroEncontrado) {
+                    System.out.println("Libro prestado exitosamente:");
+                    System.out.println("  " + libroActual);
+                    System.out.println("  Genero: " + generoOriginal);
                     break;
                 }
             }
